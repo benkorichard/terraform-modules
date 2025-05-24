@@ -19,7 +19,7 @@ To integrate this module into your Terraform configuration, include it as a modu
 
 ```terraform
 module "gcp_project" {
-  source = "source = "git::https://github.com/benkorichard/terraform-modules.git?ref=v0.0.1//gcp//project""
+  source = "git::https://github.com/benkorichard/terraform-modules.git//gcp//project?ref=v0.0.1"
 
   project_name               = "my-new-gcp-project"
   project_id                 = "my-new-gcp-project-12345"

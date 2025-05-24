@@ -1,9 +1,11 @@
+# Add input validation for org_id and folder_id
 resource "google_project" "project" {
-  name       = var.project_name
-  project_id = var.project_id
-  org_id     = var.org_id
-
+  name            = var.project_name
+  project_id      = var.project_id
   billing_account = var.billing_account
+
+  org_id    = var.org_id != null ? var.org_id : null
+  folder_id = var.folder_id != null ? var.folder_id : null
 
   labels = {
     environment = var.environment
@@ -20,12 +22,13 @@ resource "google_project_service" "services" {
 }
 
 resource "google_monitoring_notification_channel" "email" {
- display_name = "Notification email"
-   type = "email"
-   labels = {
-     email_address = var.billing_notification_email
-   }
- }
+  display_name = "Notification email"
+  project      = var.project_id
+  type         = "email"
+  labels = {
+    email_address = var.billing_notification_email
+  }
+}
 
 resource "google_billing_budget" "billing_budget" {
   billing_account = var.billing_account
